@@ -3,6 +3,8 @@
 //api('prompt')
 //api('stack')
 
+template('./workflow/modules/assets.js')
+
 before('prompt', function() {
   ask('Use assets helpers?', 'use_asset_helpers')
 
@@ -52,8 +54,4 @@ after('prompt', function() {
     `)
   }
 
-})
-
-invocator().insertAfter('bundle', function() {
-  template('./workflow/modules/assets.js')
 })

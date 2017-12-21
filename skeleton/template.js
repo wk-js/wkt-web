@@ -3,19 +3,16 @@
 //api('stack')
 //api('template')
 
+template('config/application.js')
+template('Wkfile')
+template('README.md')
+
 before('prompt', function() {
   prompt('Project name:', 'project_name')
 })
 
-
 after('bundle', function() {
-  const options = {
-    data: {
-      project_name: answer('project_name')
-    }
-  }
-
-  template('config/application.js', options)
-  template('Wkfile', options)
-  template('README.md', options)
+  templateData({
+    project_name: answer('project_name')
+  })
 })

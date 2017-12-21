@@ -7,10 +7,8 @@
 //   // exec('git init')
 // })
 
+template('config/application.js')
+
 before('bundle', function() {
   chunkAdd('application:module:git', `this.module( require('../workflow/modules/git.js') )`)
-})
-
-invocator().insertAfter('bundle', function() {
-  template('config/application.js')
 })
