@@ -54,6 +54,6 @@ after('prompt', function() {
 
 })
 
-after('bundle', function() {
+invocator().insertAfter('bundle', function() {
   template('./workflow/modules/assets.js')
 })
