@@ -10,7 +10,7 @@ module.exports = function() {
     resolved: false
   }
 
-  <%= chunk('assets:helpers') %>
+  {{ chunk('assets:helpers') }}
 
   // Add configuration task
   this.configure.after('application:configure', 'assets:resolve', function() {

@@ -5,7 +5,7 @@
 
 template('./workflow/modules/assets.js')
 
-before('prompt', function() {
+stack().before('prompt', function() {
   ask('Use assets helpers?', 'use_asset_helpers')
 
   chunkBefore('application:setup', 'application:setup:assets', `
@@ -24,7 +24,7 @@ this.module( require('../workflow/modules/assets.js') )
 
 })
 
-after('prompt', function() {
+stack().after('prompt', function() {
 
   if (answer('use_asset_helpers')) {
     chunkAdd('assets:helpers', `

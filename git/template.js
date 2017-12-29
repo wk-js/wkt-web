@@ -3,12 +3,10 @@
 //api('exec')
 //api('template')
 
-// after('make', 'git:init', function() {
-//   // exec('git init')
-// })
+stack().before('bundle', function() {
+  chunkAdd('application:module:git', "this.module( require('../workflow/modules/git.js') )")
+})
 
-template('config/application.js')
-
-before('bundle', function() {
-  chunkAdd('application:module:git', `this.module( require('../workflow/modules/git.js') )`)
+invocator().after('bundle', 'git:init', function() {
+  execSync('git init')
 })
