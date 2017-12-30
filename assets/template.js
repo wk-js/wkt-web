@@ -1,8 +1,3 @@
-//api('file')
-//api('template')
-//api('prompt')
-//api('stack')
-
 template('./workflow/modules/assets.js')
 
 stack().before('prompt', function() {

@@ -1,8 +1,3 @@
-//api('file')
-//api('prompt')
-//api('stack')
-//api('template')
-
 template('config/application.js')
 template('Wkfile')
 template('README.md')

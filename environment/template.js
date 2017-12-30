@@ -1,6 +1,3 @@
-//api('file')
-//api('template')
-
 template('config/application.js')
 
 stack().before('bundle', function() {

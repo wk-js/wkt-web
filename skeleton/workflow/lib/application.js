@@ -1,21 +1,16 @@
 'use strict'
 
-const Configure = require('./configure')
+const Configure = require('./stack/configure')
 
 class Application {
 
   constructor() {
     this.config = {}
 
-    this._helpers = {}
-    this._datas   = {}
-
-    this.configure = new Configure(this)
-    this.configure.autocreate = true
-
     // Setup
+    this.configure = new Configure(this)
     this.configure.add( 'application:initialize' )
-    this.configure.add( 'application:configure' )
+    this.configure.add( 'application:configure'  )
   }
 
   get root() {
@@ -24,15 +19,6 @@ class Application {
 
   module(fn) {
     fn.call( this, this )
-  }
-
-  helper(obj) {
-    Object.assign(this._helpers, obj)
-  }
-
-  data(key, obj) {
-    const data      = this._datas[key] || {}
-    this._datas[key] = Object.assign(data, obj)
   }
 
   make() {

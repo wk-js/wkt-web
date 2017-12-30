@@ -1,7 +1,3 @@
-//api('file')
-//api('stack')
-//api('template')
-
 template('Wkfile')
 template('config/application.js')
 
