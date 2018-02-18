@@ -4,6 +4,8 @@
 //@api=prompt
 //@api=exec
 
+const { join } = require('path')
+
 addFile('**/*')
 ignoreFile('template.js')
 addFile('.eslintrc.yml')
@@ -16,6 +18,8 @@ RootStack().before('bundle', 'skeleton:prompt', function() {
   return RootAPI()
   .prompt('Project name:', 'project_name')
   .then(function( project_name ) {
+
+    output( join(output(), project_name) )
 
     RootAPI().templateData({
       project_name: project_name
