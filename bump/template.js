@@ -1,7 +1,9 @@
-template('Wkfile')
-template('config/application.js')
+/* eslint-disable */
+//@api=file
 
-stack().before('bundle', function() {
-  chunkBefore('application:module', 'application:module:bump', "this.module( require('../workflow/modules/bump.js') )")
-  chunkAdd('Wkfile:bump', "wk.require('bump', true)")
-})
+addFile('**/*')
+ignoreFile('template.js')
+
+chunk().add('application:module:package', "this.module( require('../workflow/modules/package.js') )")
+
+chunk().add('wkfile:require:bump', "wk.require('bump', true)")

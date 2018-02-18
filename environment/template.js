@@ -1,5 +1,9 @@
-template('config/application.js')
+/* eslint-disable */
+//@api=file
 
-stack().before('bundle', function() {
-  chunkAdd('application:module:environments', "this.module( require('../workflow/modules/environment.js') )")
-})
+addFile('**/*')
+ignoreFile('template.js')
+
+chunk().add('application:module:environment', "this.module( require('../workflow/modules/environment.js') )")
+
+chunk().add('application:setup:assets', '')

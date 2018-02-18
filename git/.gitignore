@@ -1,6 +1,7 @@
-node_modules
 .DS_Store
-tmp
-.tmp
+node_modules
 npm-debug.*
-.history
+public
+dist
+tmp
+config/locales

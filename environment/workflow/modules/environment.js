@@ -2,18 +2,18 @@
 
 const path = require('path')
 
-module.exports = function(Application) {
+module.exports = function EnvironmentModule() {
 
-  this.configure.before('application:configure', 'environment:setup', function() {
+  this.configure.after('application:initialize', 'environment:setup', () => {
     const ENV           = process.env.NODE_ENV || 'development'
-    const ENV_DATA_PATH = path.join(process.cwd(), 'config/environments/', ENV)
+    const ENV_DATA_PATH = path.join(this.root, 'config/environments/', ENV)
     const ENV_DATA      = require(ENV_DATA_PATH)
 
-    Application.config.environment = {
+    this.data('infos', {
       env: ENV
-    }
+    })
 
-    ENV_DATA.call( Application, Application )
+    ENV_DATA.call( this, this )
   })
 
 }

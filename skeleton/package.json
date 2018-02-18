@@ -1,15 +1,36 @@
 {
-  "name": "wk-starter-vue",
-  "version": "0.0.1",
-  "build_version": "20170925.0",
+  "name": "starter",
+  "version": "1.0.0",
   "description": "",
-  "author": "wk-js",
-  "license": "ISC",
+  "main": "index.js",
   "scripts": {
-    "wk": "./node_modules/.bin/wk"
+    "wk": "$(npm bin)/wk",
+    "start": "wk server",
+    "compile": "wk compile",
+    "watch": "wk watch",
+    "build": "wk build"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "when": "3.7.7",
-    "workflow-cli": "^0.8.10"
-  }
+    "lol": "github:makemepulse/lol.js"
+  },
+  "devDependencies": {
+    "asset-pipeline": "github:wk-js/asset-pipeline#1.0.4",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "extract-text-webpack-plugin": "3.0.2",
+    "front-matter": "2.3.0",
+    "lodash.template": "4.4.0",
+    "webpack-dev-server": "2.11.1",
+    "raw-loader": "0.5.1",
+    "stylus": "0.54.5",
+    "stylus-loader": "3.0.1",
+    "webpack": "3.11.0",
+    "wkt": "github:wk-js/wkt#0.1.2",
+    "workflow-cli": "github:wk-js/wk#v0.8.10"
+  },
+  "build": "20180216.0"
 }

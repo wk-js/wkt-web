@@ -16,12 +16,9 @@ function getCurrentVersion() {
 }
 
 function pad( str, padding, max, append ) {
-
   if (append) {
     return str.length === max ? str : pad(str + padding, padding, max, append)
   }
-
-
 
   return str.length === max ? str : pad(padding + str, padding, max)
 }
@@ -94,7 +91,7 @@ task('bump_version', { visible: false }, function() {
   pkg.build = getNextVersion()
 
   const pth = path.join('package.json')
-  fs.writeFileSync(pth, JSON.stringify(pkg, null, 2) + '\n')
+  fs.writeFileSync(pth, JSON.stringify(pkg, true, 2) + '\n')
 })
 
 

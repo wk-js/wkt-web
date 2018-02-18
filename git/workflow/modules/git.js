@@ -1,21 +1,14 @@
 'use strict'
 
-const when = require('when')
-const { spawn } = require('child_process')
+const { spawnSync } = require('child_process')
 
-module.exports = function(Application) {
+module.exports = function GitModule( Application ) {
 
   this.configure.after('application:initialize', 'git:commit:last', function() {
-    return when.promise((resolve) => {
-      const ps = spawn('bash', [ '-c', 'git rev-parse --verify HEAD' ])
+    const ps = spawnSync('git', [ 'rev-parse --verify HEAD' ], { shell: true })
 
-      ps.stdout.on('data', (d) => {
-        Application.config.git = {
-          commit: d.toString('utf-8').replace(/^\s|\s$/g, '')
-        }
-      })
-
-      ps.on('exit', resolve)
+    Application.data('infos', {
+      commit: ps.stdout.toString('utf-8').replace(/^\s|\s$/g, '')
     })
   })
 

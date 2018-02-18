@@ -1,77 +1,73 @@
 'use strict'
 
-const path         = require('path')
-const fs           = require('fs-extra')
-const ejs          = require('lodash.template')
-const EventEmitter = require('events').EventEmitter
+const ejs  = require( 'lodash.template' )
+const path = require( 'path' )
+const fs   = require( 'fs' )
+const _   = require( 'asset-pipeline/js/utils/fs' )
 
-class Template extends EventEmitter {
+class Template {
 
-
-  /**
-   * Create a new template
-   *
-   * @param {String} input - Path the input file
-   * @param {String} ouput - Path the output file
-   */
   constructor(input, output) {
-    super()
+    this.watch        = this.watch       .bind(this)
+    this.include      = this.include     .bind(this)
+    this.require      = this.require     .bind(this)
+    this.render       = this.render      .bind(this)
+    this.renderSource = this.renderSource.bind(this)
 
-    this.include = this.include.bind(this)
-    this.require = this.require.bind(this)
+    this.input  = input
+    this.output = output
 
-    this.input   = input
-    this.output  = output
+    this.options = {}
+    this.data    = {}
+    this.ejs     = ejs
 
-    this.options  = {}
-    this.data     = {}
-    this.ejs      = ejs
     this.includes = []
 
     this.enableWatch = false
   }
 
-  /**
-   * Render
-   */
   render() {
-
     if (!this.options.filename) {
-      this.options.filename = path.resolve(this.input)
+      this.options.filename = path.resolve( this.input )
     }
 
-    this.emit('start')
+    _.ensureDir( path.dirname(this.output) ).then(() => {
+      const rs = fs.createReadStream(this.input)
+      const ws = fs.createWriteStream(this.output)
 
-    fs.ensureDirSync( path.dirname(this.output) )
+      rs.on('data', ( chunk ) => {
+        chunk = Buffer.isBuffer(chunk) ? chunk.toString('utf8') : chunk
+        ws.write( this.renderSource(chunk) )
+      })
 
-    const rs = fs.createReadStream(this.input)
-    const ws = fs.createWriteStream(this.output)
-
-    rs.on('data', ( chunk ) => {
-      chunk = Buffer.isBuffer(chunk) ? chunk.toString('utf8') : chunk
-      ws.write( this.renderSource(chunk) )
+      rs.on('end', () => {
+        ws.end()
+      })
     })
-
-    rs.on('end', () => {
-      ws.end()
-
-      this.emit('end')
-    })
-
   }
 
   include(pth) {
     if (this.includes.indexOf(pth) === -1) {
       this.includes.push(pth)
-      // if (this.enableWatch) this.watch(pth, this.options.filename)
+      if (this.enableWatch) this.watch(pth, this.options.filename)
     }
-    return Template.include(pth, this.options)
+
+    this.data.include = this.include
+    this.data.require = this.require
+    return Template.include(pth, this.options, this.data)
   }
 
   require(pth) {
     return Template.require(pth)
   }
 
+  renderSource( src ) {
+    this.data.include = this.include
+    this.data.require = this.require
+    return Template.render(src, this.options, this.data)
+  }
+
+  // TODO
   watch(child, parent) {
     fs.watchFile(child, { interval: 300 }, (curr, prev) => {
       if (curr.mtime > prev.mtime) {
@@ -95,20 +91,6 @@ class Template extends EventEmitter {
     })
   }
 
-  /**
-   * Render a source
-   *
-   * @param {String} src
-   */
-  renderSource( src ) {
-    // Force defaults
-    this.data.include = this.include
-    this.data.require = this.require
-    this.options.interpolate = /<%=([\s\S]+?)%>/g
-
-    return Template.render( src, this.options, this.data )
-  }
-
 }
 
 /**
@@ -125,7 +107,7 @@ Template.render = function(src, options, data) {
 Template.include = function(pth, options, data) {
   pth = path.resolve(path.dirname(options.filename), pth)
   pth = path.relative(process.cwd(), pth)
-  var src = fs.readFileSync(pth)
+  var src = fs.readFileSync(pth, 'utf-8')
   return Template.render(src, options, data)
 }
 

@@ -1,7 +1,14 @@
-stack().before('bundle', function() {
-  chunkAdd('application:module:git', "this.module( require('../workflow/modules/git.js') )")
-})
+/* eslint-disable */
+//@api=file
+//@api=boilerplate
+//@api=exec
 
-invocator().after('bundle', 'git:init', function() {
-  execSync('git init')
+addFile('**/*')
+ignoreFile('template.js')
+addFile('.gitignore')
+
+chunk().add('application:module:git', "this.module( require('../workflow/modules/git.js') )")
+
+RootStack().after('bundle', 'git:init', function() {
+  return exec('git init')
 })

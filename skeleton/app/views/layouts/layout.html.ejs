@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate" />
+    <link rel="stylesheet" href="<%= asset_url('styles/index.styl') %>">
+    <title><%= title ? " - " + title : "" %></title>
+  </head>
+  <body>
+
+    <div id="app">
+      <section id="menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+      </section>
+
+      <div id="page">
+        <div class="page__content" data-namespace="<%= page %>">
+          <%= content %>
+        </div>
+      </div>
+    </div>
+
+    <%= include('../debug.html.ejs') %>
+
+    <script src="<%= asset_url('scripts/vendor/index.js') %>"></script>
+    <script src="<%= asset_url('scripts/index.js') %>"></script>
+  </body>
+</html>

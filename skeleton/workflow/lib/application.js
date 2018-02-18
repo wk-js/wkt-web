@@ -1,28 +1,36 @@
 'use strict'
 
-const Configure = require('./stack/configure')
+const { Configure } = require('wkt/js/stack/configure')
+
+function NOOP() {}
 
 class Application {
 
   constructor() {
-    this.config = {}
+    this.configure = new Configure
+    this.configure.add( 'application:initialize', NOOP)
+    this.configure.add( 'application:configure' , NOOP)
 
-    // Setup
-    this.configure = new Configure(this)
-    this.configure.add( 'application:initialize' )
-    this.configure.add( 'application:configure'  )
+    this.package = require(this.root + '/package.json')
+
+    this.module(require('../modules/__app__.js'))
   }
 
   get root() {
     return process.cwd()
   }
 
+  action(key, fn) {
+    this[key] = fn.bind(this)
+  }
+
   module(fn) {
     fn.call( this, this )
   }
 
-  make() {
-    return this.configure.execute( this )
+  make(hooks) {
+    hooks = hooks || { beforeTask: NOOP, afterTask: NOOP }
+    return this.configure.execute(hooks)
   }
 
 }

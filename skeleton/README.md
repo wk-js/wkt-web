@@ -1,31 +1,12 @@
-# {{ project_name }}
+# {%= project_name %}
 
-### Prerequisties
-```
-npm install -g workflow-cli
-```
-
-### Install
 ```
 npm install
+npm start
 ```
 
-### Dev
-```
-wk server
-```
+## Table of Contents
 
-### Build
-```
-wk build
-```
-
-### Release
-```
-ENV={target env} wk build
-```
-
-### Available tasks
-```
-wk
-```
+* [Workflow](docs/workflow.md)
+* [Frontend](docs/frontend.md)
+* [NPM Tips](docs/npm-tips.md)
