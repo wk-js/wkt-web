@@ -1,6 +1,7 @@
-/* eslint-disable */
-//@api=file
-
+---
+apis:
+  - file
+---
 addFile('**/*')
 ignoreFile('template.js')
 

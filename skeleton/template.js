@@ -1,9 +1,10 @@
-/* eslint-disable */
-//@api=file
-//@api=boilerplate
-//@api=prompt
-//@api=exec
-
+---
+apis:
+  - file
+  - boilerplate
+  - prompt
+  - exec
+---
 const { join } = require('path')
 
 addFile('**/*')
@@ -18,6 +19,37 @@ RootStack().before('bundle', 'skeleton:prompt', function() {
   return RootAPI()
   .prompt('Project name:', 'project_name')
   .then(function( project_name ) {
+
+    if (RootStore('use_rails')) {
+      chunk().add('application:setup:assets', `
+      this.assets.load_path     = './app'
+      this.assets.dst_path      = '../app/assets'
+      this.assets.cacheable     = false
+      this.assets.save_manifest = true
+      this.assets.force_resolve = true
+      this.assets.asset_key     = 'my_hash_key'
+
+      this.entry('styles/index.styl', 'stylesheets/main.css.erb')
+      this.entry('scripts/index.js', 'javascripts/main.js')
+      this.entry('scripts/vendor/index.js', 'javascripts/vendor.js'`)
+    } else {
+      chunk().add('application:setup:assets', `
+      this.assets.load_path     = './app'
+      this.assets.dst_path      = './public'
+      this.assets.cacheable     = false
+      this.assets.save_manifest = true
+      this.assets.force_resolve = true
+      this.assets.asset_key     = 'my_hash_key'
+
+      this.assets.addFile( 'assets/**/*' )
+      this.assets.manager.symlink('assets')
+
+      this.entry('styles/index.styl', 'main.css')
+      this.entry('scripts/index.js', 'main.js')
+      this.entry('scripts/vendor/index.js', 'vendor.js')
+      this.entry('views/index.html.ejs', 'index.html', { cache: false })
+      this.entry('views/about.html.ejs', 'about.html', { cache: false })`)
+    }
 
     output( join(output(), project_name) )
 
@@ -38,16 +70,6 @@ RootStack().before('bundle', 'skeleton:prompt', function() {
 RootStack().after('bundle', 'npm:install', function() {
   return exec('npm install')
 })
-
-chunk().add('application:setup:assets', `
-this.assets.addFile( 'assets/**/*' )
-this.assets.manager.symlink('assets')
-
-this.entry('styles/index.styl', 'main.css')
-this.entry('scripts/index.js', 'main.js')
-this.entry('scripts/vendor/index.js', 'vendor.js')
-this.entry('views/index.html.ejs', 'index.html', { cache: false })
-this.entry('views/about.html.ejs', 'about.html', { cache: false })`)
 
 chunk().add('wkfile:tasks', `
 task('build',   [ 'application:run --copy', 'webpack --compress' ])
