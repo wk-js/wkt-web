@@ -2,6 +2,8 @@
 apis:
   - file
 ---
+store('root', 'use_environment', true)
+
 addFile('environments/**/*', { base_dir: 'config' })
 addFile('module_environment.js', { rename: 'workflow/modules/environment.js' })
 

@@ -20,35 +20,31 @@ stack('root').before('bundle', 'skeleton:prompt', function() {
   .prompt('Project name:', 'project_name')
   .then(function( project_name ) {
 
-    if (store('root', 'use_rails')) {
+    if (store('root', 'use_environment').get()) {
       chunk().add('application:setup:assets', `
-      this.assets.load_path     = './app'
-      this.assets.dst_path      = '../app/assets'
-      this.assets.cacheable     = false
-      this.assets.save_manifest = true
-      this.assets.force_resolve = true
-      this.assets.asset_key     = 'my_hash_key'
-
-      this.entry('styles/index.styl', 'stylesheets/main.css.erb')
-      this.entry('scripts/index.js', 'javascripts/main.js')
-      this.entry('scripts/vendor/index.js', 'javascripts/vendor.js')`)
+    this.assets.load_path     = './app'
+    this.assets.dst_path      = '../app/assets'
+    this.assets.cacheable     = false
+    this.assets.save_manifest = true
+    this.assets.force_resolve = true
+    this.assets.asset_key     = 'my_hash_key'`)
     } else {
       chunk().add('application:setup:assets', `
-      this.assets.load_path     = './app'
-      this.assets.dst_path      = './public'
-      this.assets.cacheable     = false
-      this.assets.save_manifest = true
-      this.assets.force_resolve = true
-      this.assets.asset_key     = 'my_hash_key'
+    this.assets.load_path     = './app'
+    this.assets.dst_path      = './public'
+    this.assets.cacheable     = false
+    this.assets.save_manifest = true
+    this.assets.force_resolve = true
+    this.assets.asset_key     = 'my_hash_key'
 
-      this.assets.addFile( 'assets/**/*' )
-      this.assets.manager.symlink('assets')
+    this.assets.addFile( 'assets/**/*' )
+    this.assets.manager.symlink('assets')
 
-      this.entry('styles/index.styl', 'main.css')
-      this.entry('scripts/index.js', 'main.js')
-      this.entry('scripts/vendor/index.js', 'vendor.js')
-      this.entry('views/index.html.ejs', 'index.html', { cache: false })
-      this.entry('views/about.html.ejs', 'about.html', { cache: false })`)
+    this.entry('styles/index.styl', 'main.css')
+    this.entry('scripts/index.js', 'main.js')
+    this.entry('scripts/vendor/index.js', 'vendor.js')
+    this.entry('views/index.html.ejs', 'index.html', { cache: false })
+    this.entry('views/about.html.ejs', 'about.html', { cache: false })`)
     }
 
     output( join(output(), project_name) )

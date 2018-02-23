@@ -1,6 +1,5 @@
 ---
 optionalSources:
-  - rails
   - skeleton
   - environment
   - bump
