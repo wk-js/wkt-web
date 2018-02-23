@@ -29,7 +29,7 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
     "webpack": "3.11.0",
-    "wkt": "github:wk-js/wkt#0.1.4",
+    "wkt": "github:wk-js/wkt#0.1.5",
     "workflow-cli": "github:wk-js/wk#v0.8.10"
   },
   "build": "20180216.0"
