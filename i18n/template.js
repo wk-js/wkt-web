@@ -4,18 +4,19 @@ apis:
   - boilerplate
   - exec
 ---
-addFile('**/*')
-ignoreFile('template.js')
+addFile('module_i18n.js', { rename: 'workflow/modules/i18n.js' })
+addFile('task_i18n.js', { rename: 'workflow/tasks/i18n.js' })
 
-chunk().add('application:module:i18n', "this.module( require('../workflow/modules/i18n.js') )")
+chunk().add('application:module:i18n', "  this.module( require('../workflow/modules/i18n.js') )")
 
 chunk().add('application:setup:i18n', `
-this.config('i18n').spreadSheetKey = '<spreadsheet_key>'
-this.config('i18n').default_locale = 'en'
-this.config('i18n').locales.push( 'en', 'fr' )
-this.config('i18n').load_path.push(
-  this.root + '/config/locales'
-)`)
+      this.config('i18n').spreadSheetKey = '<spreadsheet_key>'
+      this.config('i18n').default_locale = 'en'
+      this.config('i18n').locales.push( 'en', 'fr' )
+      this.config('i18n').load_path.push(
+        this.root + '/config/locales'
+      )
+`)
 
 chunk().add('wkfile:require:i18n', "wk.require('i18n', true)")
 

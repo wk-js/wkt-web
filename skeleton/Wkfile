@@ -1,10 +1,9 @@
 wk.require.paths.push(process.cwd() + '/workflow/tasks')
 wk.require.paths.push(process.cwd() + '/workflow/webpack/tasks')
 
-{%= chunk('wkfile:require') %}
-
 wk.require('assets'     , true)
 wk.require('webpack'    , true)
 wk.require('application', true)
+{%= chunk('wkfile:require') %}
 
 {%= chunk('wkfile:tasks') %}

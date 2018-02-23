@@ -2,6 +2,7 @@
 sources:
   - skeleton
 optionalSources:
+  - rails
   - environment
   - bump
   - git
@@ -9,5 +10,4 @@ optionalSources:
   - aws
   - template
   - vue
-  - rails
 ---

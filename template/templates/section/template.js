@@ -1,10 +1,11 @@
-/* eslint-disable */
-//@api=file
-//@api=prompt
-
+---
+apis:
+  - file
+  - prompt
+---
 const _ = require('lol/utils/string')
 
-LocalStack().before('bundle', 'prompt', function() {
+stack().before('bundle', 'prompt', function() {
   return prompt('Section name:').then(function(name) {
     addFile('*', { base_dir: name, rename: name+'${ext}', template: true })
     ignoreFile('template.js')

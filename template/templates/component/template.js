@@ -1,10 +1,11 @@
-/* eslint-disable */
-//@api=file
-//@api=prompt
-
+---
+apis:
+  - file
+  - prompt
+---
 const _ = require('lol/utils/string')
 
-LocalStack().before('bundle', 'prompt', function() {
+stack().before('bundle', 'prompt', function() {
   return prompt('Component name:', 'name').then(function() {
     return ask('Is UI?', 'is_ui')
   }).then(function() {

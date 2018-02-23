@@ -15,12 +15,12 @@ templateFile('README.md', true)
 templateFile('config/application.js', true)
 templateFile('Wkfile', true)
 
-RootStack().before('bundle', 'skeleton:prompt', function() {
-  return RootAPI()
+stack('root').before('bundle', 'skeleton:prompt', function() {
+  return api('root')
   .prompt('Project name:', 'project_name')
   .then(function( project_name ) {
 
-    if (RootStore('use_rails')) {
+    if (store('root', 'use_rails')) {
       chunk().add('application:setup:assets', `
       this.assets.load_path     = './app'
       this.assets.dst_path      = '../app/assets'
@@ -53,7 +53,7 @@ RootStack().before('bundle', 'skeleton:prompt', function() {
 
     output( join(output(), project_name) )
 
-    RootAPI().templateData({
+    api('root').templateData({
       project_name: project_name
     })
 
@@ -67,7 +67,7 @@ RootStack().before('bundle', 'skeleton:prompt', function() {
   })
 })
 
-RootStack().after('bundle', 'npm:install', function() {
+stack('root').after('bundle', 'npm:install', function() {
   return exec('npm install')
 })
 
