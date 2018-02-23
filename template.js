@@ -1,8 +1,7 @@
 ---
-sources:
-  - skeleton
 optionalSources:
   - rails
+  - skeleton
   - environment
   - bump
   - git
