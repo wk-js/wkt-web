@@ -1,6 +1,7 @@
 ---
 apis:
   - file
+  - boilerplate
 ---
 store('root', 'use_environment', true)
 
