@@ -20,7 +20,7 @@ stack('root').before('bundle', 'skeleton:prompt', function() {
   .prompt('Project name:', 'project_name')
   .then(function( project_name ) {
 
-    if (store('root', 'use_environment').get()) {
+    if (!store('root', 'use_environment').get()) {
       chunk().add('application:setup:assets', `
     this.assets.load_path     = './app'
     this.assets.dst_path      = '../app/assets'
