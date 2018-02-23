@@ -2,6 +2,7 @@
 apis:
   - file
   - prompt
+  - boilerplate
 ---
 const _ = require('lol/utils/string')
 
@@ -18,14 +19,14 @@ stack().before('bundle', 'prompt', function() {
     if (is_ui) {
       templateData({
         name: 'ui-' + name,
-        templateName: 'UI' + _.toCapitaliz( name ) + 'Template'
+        templateName: 'UI' + _.toCamelCase( name ) + 'Template'
       })
 
       output( 'app/scripts/components/ui' )
     } else {
       templateData({
         name: name,
-        templateName: _.toCapitaliz( name ) + 'Template'
+        templateName: _.toCamelCase( name ) + 'Template'
       })
 
       output( 'app/scripts/components' )
