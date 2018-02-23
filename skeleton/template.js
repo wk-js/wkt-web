@@ -31,7 +31,7 @@ stack('root').before('bundle', 'skeleton:prompt', function() {
 
       this.entry('styles/index.styl', 'stylesheets/main.css.erb')
       this.entry('scripts/index.js', 'javascripts/main.js')
-      this.entry('scripts/vendor/index.js', 'javascripts/vendor.js'`)
+      this.entry('scripts/vendor/index.js', 'javascripts/vendor.js')`)
     } else {
       chunk().add('application:setup:assets', `
       this.assets.load_path     = './app'
