@@ -7,5 +7,5 @@ optionalSources:
   - i18n
   - aws
   - template
-  - vue
+  - rails
 ---
