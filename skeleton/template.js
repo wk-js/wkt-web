@@ -71,5 +71,4 @@ chunk().add('wkfile:tasks', `
 task('build',   [ 'application:run --copy', 'webpack --compress' ])
 task('compile', [ 'application:run --copy', 'webpack --compile --debug' ])
 task('watch'  , [ 'application:run --copy', 'webpack --watch --debug' ])
-task('server' , [ 'application:run --copy', 'webpack --server' ])
-task('deploy' , [ 'application:run --copy', 'aws:objects', 'aws:exception' ])`)
+task('server' , [ 'application:run --copy', 'webpack --server' ])`)
