@@ -33,7 +33,7 @@ stack('root').before('bundle', 'skeleton:prompt', function() {
     if (!store('root').get('use_environment')) {
       content += `
     this.assets.addFile( 'assets/**/*' )
-    this.assets.manager.copy('assets')
+    this.assets.manager.copy('assets/**/*')
 
     this.entry('styles/index.styl', 'main.css')
     this.entry('scripts/index.js', 'main.js')
