@@ -90,6 +90,7 @@ function configure( App, OPTIONS ) {
           {
             loader: 'stylus-loader',
             options: {
+              preferPathResolver: 'webpack',
               use: [ require(STYLUS_ASSET_PLUGIN)() ],
               set: {
                 "include css": true,
